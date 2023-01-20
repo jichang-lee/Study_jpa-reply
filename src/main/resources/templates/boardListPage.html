@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 페이지</title>
+</head>
+<body>
+<table border="1">
+  <tr>
+    <th>No</th>
+    <th>제목</th>
+    <th>내용</th>
+    <th>작성자</th>
+    <th>게시글암호</th>
+    <th>작성시간</th>
+    <th>조회수</th>
+    <th>작성시간</th>
+    <th>상세조회</th>
+  </tr>
+
+  <tr th:each="list : ${dtoPage}">
+    <td th:text="${list.id}"></td>
+    <td th:text="${list.title}"></td>
+    <td th:text="${list.content}"></td>
+    <td th:text="${list.writer}"></td>
+    <td th:text="${list.boardPw}"></td>
+    <td th:text="${list.createTime}"></td>
+    <td th:text="${list.hit}"></td>
+    <td th:text="*{#temporals.format(list.createTime, 'yyyy/MM/dd/HH:mm')}"></td>
+    <td><a th:href="@{|/board/detail/${list.id}|}">조회</a></td>
+  </tr>
+
+</table>
+<a th:href="@{/}">Home</a>
+<tr>
+<td colspan="80">
+  <a th:href="${dtoPage.first} ? '#' : @{board/pagingList(page=${dtoPage.getNumber()-1})}">이전</a>
+
+  <th:block th:each="page : ${#numbers.sequence(startPage,endPage)}">
+  <span th:if="${page == nowPage}"th:text="${page}" th:classappend="class1"> </span>
+  <span th:unless="${page == nowPage}">
+    <a th:href="@{/board/pagingList(page=${page-1})}"th:text="${page}"></a>
+  </span>
+  </th:block>
+
+  <a th:href="${dtoPage.last} ? '#' : @{board/pagingList(page=${dtoPage.getNumber()+1}}">다음</a>
+
+</td>
+
+</tr>
+</body>
+</html>

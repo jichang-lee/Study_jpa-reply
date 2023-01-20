@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 전체 목록</title>
+</head>
+<body>
+<div class="write-con">
+<table border="1">
+  <tr>
+    <th>No</th>
+    <th>제목</th>
+    <th>내용</th>
+    <th>작성자</th>
+    <th>게시글암호</th>
+    <th>작성시간</th>
+    <th>조회수</th>
+    <th>작성시간</th>
+    <th>게시글 수정</th>
+  </tr>
+
+  <tr>
+    <td th:text="${list.id}"></td>
+    <td th:text="${list.title}"></td>
+    <td th:text="${list.content}"></td>
+    <td th:text="${list.writer}"></td>
+    <td th:text="${list.boardPw}"></td>
+    <td th:text="${list.createTime}"></td>
+    <td th:text="${list.hit}"></td>
+    <td th:text="*{#temporals.format(list.createTime, 'yyyy/MM/dd/HH:mm')}"></td>
+    <td><a th:href="@{|/board/boardUpdate/${list.id}|}">수정</a></td>
+  </tr>
+
+</table>
+
+</div>
+
+<a th:href="@{/}">Home</a>
+
+<div class="reply-con">
+  <!--댓글 작성-->
+  <div class="reply-write">
+  <h2>Reply write</h2>
+  <form th:action="@{/reply/write}" method="post">
+    <input type="hidden" readonly name="boardId" th:value="${list.id}">
+    <ul>
+      <li><label for="replyWrite">작성자</label><input type="text" name="replyWrite"id="replyWrite"> </li>
+
+      <li><label for="replyContent">내용</label> <br>
+        <textarea name="replyContent" id="replyContent" cols="30" rows="10"></textarea>
+      </li>
+
+      <li><input type="submit"value="댓글작성"></li>
+    </ul>
+  </form>
+  </div>
+  <div class="reply-list">
+    <!--댓글리스트-->
+  </div>
+</div>
+</body>
+</html>
